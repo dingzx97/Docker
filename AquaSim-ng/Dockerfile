@@ -22,7 +22,6 @@ ADD aquasim-ng.tgz /root/
 RUN apt-get update; \
 	apt-get upgrade; \
 	apt-get install -y --no-install-recommends \
-		ssh \
 		build-essential \
 		cmake \
 		unzip \
@@ -38,13 +37,8 @@ RUN apt-get update; \
 	rm -rf get-pip.py; \
 	rm -rf /var/lib/apt/lists/*
 
-# 编译aquasim-ng
-WORKDIR /root/aquasim-ng/ns-3.29
-RUN python waf configure --build-profile=debug --enable-examples --disable-python; \
-	python waf clean; \
-	cp ./src/applications/model/onoff-application.h ./build/ns3; \
-	python waf build
-	
+# 编译aquasim-ng，运行startwork.sh脚本
 WORKDIR /root
+COPY startwork.sh /root/
 
 CMD ["bash"]
