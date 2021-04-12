@@ -1,0 +1,13 @@
+FROM php:7-fpm-alpine
+
+RUN wget -P /tmp https://github.com/seacms-net/CMS/raw/c3e96977c0611df20fdc8b6575da4d55549f6886/SeaCMS_210202.zip; \
+    unzip /tmp/SeaCMS_210202.zip -d /tmp; \
+    mv /tmp/SeaCMS_210202/Upload/* /var/www/html/; \
+    chgrp -R www-data /var/www/html/; \
+    chown -R www-data /var/www/html/; \
+    apk add --no-cache libpng-dev freetype-dev libjpeg-turbo-dev; \
+    docker-php-ext-install gd mysqli; \
+    rm -rf /tmp/*;
+
+VOLUME /var/www/html
+

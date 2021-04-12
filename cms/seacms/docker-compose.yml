@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+    nginx:
+        image: nginx
+        container_name: nginx
+        hostname: nginx
+        restart: always
+        networks:
+            - seacms
+        ports:
+            - 80:80
+        volumes:
+            - ./nginx/seacms.conf:/etc/nginx/conf.d/default.conf
+            - seacms:/www/movie/
+
+    mariadb:
+        image: mariadb
+        container_name: mariadb
+        hostname: mariadb
+        restart: always
+        networks:
+            - seacms
+        volumes:
+            - mariadb:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+
+    
+    seacms:
+        image: dingzx97/cms:seacms
+        container_name: seacms
+        hostname: seacms
+        restart: always
+        networks:
+            - seacms
+        volumes:
+            - seacms:/var/www/html/
+
+volumes:
+    mariadb:
+    seacms:
+
+networks:
+    seacms:
