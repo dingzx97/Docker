@@ -3,10 +3,11 @@ FROM php:7-fpm-alpine
 RUN wget -P /tmp https://github.com/seacms-net/CMS/raw/c3e96977c0611df20fdc8b6575da4d55549f6886/SeaCMS_210202.zip; \
     unzip /tmp/SeaCMS_210202.zip -d /tmp; \
     mv /tmp/SeaCMS_210202/Upload/* /var/www/html/; \
-    chgrp -R www-data /var/www/html/; \
-    chown -R www-data /var/www/html/; \
-    apk add --no-cache libpng-dev freetype-dev libjpeg-turbo-dev; \
-    docker-php-ext-install gd mysqli; \
+    chown -R www-data:www-data /var/www/html/; \
+    apk add --no-cache freetype libjpeg-turbo libpng freetype-dev libjpeg-turbo-dev libpng-dev; \
+    docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; \
+    docker-php-ext-install -j$(nproc) gd mysqli;\
+    apk del --no-cache freetype-dev libjpeg-turbo-dev libpng-dev; \
     rm -rf /tmp/*;
 
 VOLUME /var/www/html

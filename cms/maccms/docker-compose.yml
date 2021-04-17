@@ -7,12 +7,12 @@ services:
         hostname: nginx
         restart: always
         networks:
-            - seacms
+            - cms
         ports:
             - 80:80
         volumes:
-            - ./nginx/seacms.conf:/etc/nginx/conf.d/default.conf
-            - seacms:/www/seacms/
+            - ./nginx/maccms.conf:/etc/nginx/conf.d/default.conf
+            - maccms:/www/maccms/
 
     mariadb:
         image: mariadb
@@ -20,26 +20,26 @@ services:
         hostname: mariadb
         restart: always
         networks:
-            - seacms
+            - cms
         volumes:
             - mariadb:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=123456
 
     
-    seacms:
-        image: dingzx97/cms:seacms
-        container_name: seacms
-        hostname: seacms
+    maccms:
+        image: dingzx97/cms:maccms
+        container_name: maccms
+        hostname: maccms
         restart: always
         networks:
-            - seacms
+            - cms
         volumes:
-            - seacms:/var/www/html/
+            - maccms:/var/www/html/
 
 volumes:
     mariadb:
-    seacms:
+    maccms:
 
 networks:
-    seacms:
+    cms:

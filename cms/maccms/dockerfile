@@ -1,0 +1,13 @@
+FROM php:7-fpm-alpine
+
+RUN wget -P /tmp https://github.com/magicblack/maccms_down/raw/120c332da7dd34a39c666615235fed57d41fe5dc/maccms10.zip; \
+    unzip /tmp/maccms10.zip -d /var/www/html/; \
+    chown -R www-data:www-data /var/www/html/; \
+    apk add --no-cache libzip freetype libjpeg-turbo libpng libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev; \
+    docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; \
+    docker-php-ext-install -j$(nproc) pdo_mysql zip gd;\
+    apk del --no-cache libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev; \
+    rm -rf /tmp/*;
+
+VOLUME /var/www/html
+
