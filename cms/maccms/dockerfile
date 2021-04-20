@@ -2,6 +2,10 @@ FROM php:7-fpm-alpine
 
 RUN wget -P /tmp https://github.com/magicblack/maccms_down/raw/120c332da7dd34a39c666615235fed57d41fe5dc/maccms10.zip; \
     unzip /tmp/maccms10.zip -d /var/www/html/; \
+    wget -P /tmp https://mythemefile.oss-cn-beijing.aliyuncs.com/202003/9a5a3e017e.zip; \
+    unzip /tmp/9a5a3e017e.zip -d /tmp; \
+    rm -rf /var/www/html/template/default/*; \
+    mv /tmp/007maccms_v1.0/template/stui_tpl/* /var/www/html/template/default/; \
     chown -R www-data:www-data /var/www/html/; \
     apk add --no-cache libzip freetype libjpeg-turbo libpng libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev; \
     docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; \
