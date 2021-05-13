@@ -6,6 +6,8 @@ RUN wget -P /tmp https://github.com/magicblack/maccms_down/raw/120c332da7dd34a39
     unzip /tmp/9a5a3e017e.zip -d /tmp; \
     rm -rf /var/www/html/template/default/*; \
     mv /tmp/007maccms_v1.0/template/stui_tpl/* /var/www/html/template/default/; \
+    mv /etc/periodic/ /var/www/html/; \
+    sed -i 's#etc#var/www/html#g' /etc/crontabs/root; \
     chown -R www-data:www-data /var/www/html/; \
     apk add --no-cache libzip freetype libjpeg-turbo libpng libzip-dev freetype-dev libjpeg-turbo-dev libpng-dev; \
     docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/; \
@@ -14,4 +16,3 @@ RUN wget -P /tmp https://github.com/magicblack/maccms_down/raw/120c332da7dd34a39
     rm -rf /tmp/*;
 
 VOLUME /var/www/html
-
