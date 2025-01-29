@@ -1,6 +1,6 @@
 FROM php:7-fpm-alpine
 
-ENV MACCMS_VERSION="2024.1000.4046"
+ENV MACCMS_VERSION="2025.1000.4047"
 
 RUN wget https://github.com/magicblack/maccms10/archive/refs/tags/v${MACCMS_VERSION}.zip -O /tmp/maccms.zip; \
     unzip -q /tmp/maccms.zip -d /tmp; \
